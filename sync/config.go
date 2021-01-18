@@ -121,8 +121,12 @@ type Filter struct {
 type DatabaseOptions struct {
 	// Clear database with DROP/CREATE before sync
 	ClearDatabase bool `yaml:"clear-database"`
-	// Arguments for mysqldump command
-	Mysqldump *YamlStringArray `yaml:"mysqldump"`
+	Mysqldump struct {
+		// flags for mysqldump command
+		Flags *YamlStringArray `yaml:"flags"`
+		// Pipes for mysqldump command
+		Pipes *YamlStringArray `yaml:"pipes"`
+	} `yaml:"mysqldump"`
 	// Arguments for mysql command
 	Mysql *YamlStringArray `yaml:"mysql"`
 	// Arguments for pgdump command

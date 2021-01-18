@@ -52,6 +52,12 @@ func (database *DatabaseMysql) remoteMysqldumpCmdBuilder(additionalArgs []string
 	}
 
 	cmd = append(cmd, args...)
+	
+	// add custom pipes (raw)
+	if database.Options.Mysqldump.Pipes != nil {
+		cmd = append(cmd, database.Options.Mysqldump.Pipes.Array()...)
+	}
+	
 	cmd = append(cmd, "|", "gzip", "--stdout")
 
 	return connection.RawShellCommandBuilder(cmd...)

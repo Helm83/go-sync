@@ -8,10 +8,10 @@ func (database *DatabaseMysql) localMysqldumpCmdBuilder(additionalArgs []string,
 	var args []string
 
 	connection := database.Local.Connection.GetInstance().Clone()
-
-	// add custom options (raw)
-	if database.Local.Options.Mysqldump != nil {
-		args = append(args, database.Local.Options.Mysqldump.Array()...)
+	
+	// add custom flags (raw)
+	if database.Local.Options.Mysqldump.Flags != nil {
+		args = append(args, database.Local.Options.Mysqldump.Flags.Array()...)
 	}
 
 	if database.Local.User != "" {
@@ -46,6 +46,11 @@ func (database *DatabaseMysql) localMysqldumpCmdBuilder(additionalArgs []string,
 	// include
 	if useFilter && len(includeArgs) > 0 {
 		args = append(args, includeArgs...)
+	}
+	
+	// add custom pipes (raw)
+	if database.Local.Options.Mysqldump.Pipes != nil {
+		args = append(args, database.Local.Options.Mysqldump.Pipes.Array()...)
 	}
 
 	return connection.RawCommandBuilder("mysqldump", args...)
