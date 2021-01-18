@@ -46,9 +46,9 @@ func (database *DatabaseMysql) remoteMysqldumpCmdBuilder(additionalArgs []string
 
 	cmd := []string{"mysqldump"}
 
-	// add custom options (raw)
-	if database.Options.Mysqldump != nil {
-		cmd = append(cmd, database.Options.Mysqldump.Array()...)
+	// add custom flags (raw)
+	if database.Options.Mysqldump.Flags != nil {
+		cmd = append(cmd, database.Options.Mysqldump.Flags.Array()...)
 	}
 
 	cmd = append(cmd, args...)
